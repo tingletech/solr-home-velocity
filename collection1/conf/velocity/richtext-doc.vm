@@ -1,14 +1,17 @@
-#if($doc.getFieldValue('title'))
-  #set($title = $esc.html($doc.getFirstValue('title')))
+#if($doc.getFieldValue('title_ss'))
+  #set($title = $esc.html($doc.getFirstValue('title_ss')))
 #else
   #set($title = "["+$doc.getFieldValue('id')+"]")
 #end
-#if($doc.getFieldValue('url'))
-  #set($url = $doc.getFieldValue('url'))
+#if($doc.getFieldValue('targetLink_ss'))
+  #set($url = $doc.getFieldValue('targetLink_ss'))
 #elseif($doc.getFieldValue('resourcename'))
   #set($url = "file:///$doc.getFieldValue('resourcename')")
 #else
   #set($url = "$doc.getFieldValue('id')")
+#end
+#if($doc.getFieldValue('id'))
+  #set($id = "$doc.getFieldValue('id')")
 #end
 #set($supportedtypes = "7z;ai;aiff;asc;audio;bin;bz2;c;cfc;cfm;chm;class;conf;cpp;cs;css;csv;deb;divx;doc;dot;eml;enc;file;gif;gz;hlp;htm;html;image;iso;jar;java;jpeg;jpg;js;lua;m;mm;mov;mp3;mpg;odc;odf;odg;odi;odp;ods;odt;ogg;pdf;pgp;php;pl;png;ppt;ps;py;ram;rar;rb;rm;rpm;rtf;sig;sql;swf;sxc;sxd;sxi;sxw;tar;tex;tgz;txt;vcf;video;vsd;wav;wma;wmv;xls;xml;xpi;xvid;zip")
 #set($ct = $list.get($doc.getFirstValue('content_type').split(";"),0))
@@ -21,14 +24,20 @@
 ## Small file type icons from http://www.splitbrain.org/projects/file_icons (public domain)
 <img src="#{url_root}/img/filetypes/${filetype}.png" align="center">
 <a href="${url}" target="_blank"><b>$title</b></a><span class="mlt">   #if($params.getBool('mlt', false) == false)<a href="#lensNoQ&q=id:%22$docId%22&mlt=true">More Like This</a>#end</span></div>
-<div>Id: #field('id')</div>
-<div>
+<div>More Info: http://n2t.net/$id</div>
+<div> 
 #if($doc.getFieldValue('resourcename'))Resource name: $filename 
-#elseif($url)URL: $url
+#elseif($url)URL: $url.get(0)
 #end
 #if($ct) ($ct)#end
 </div>
-#if($doc.getFieldValue('author'))<div>Author: #field('author')</div>#end
+#if($doc.getFieldValue('creator_ss'))<div>Author: #field('creator_ss')</div>#end
+#if($doc.getFieldValue('year_ss'))<div>Published: #field('year_ss')</div>#end
+#if($doc.getFieldValue('collectionName_ss'))<div>Collection: #field('collectionName_ss')</div>#end
+#if($doc.getFieldValue('last_modified'))<div>Last-modified: #field('last_modified')</div>#end
+#if($doc.getFieldValue('type_ss'))<div> #field('type_ss')</div>#end
+#if($doc.getFieldValue('format_ss'))<div> #field('format_ss')</div>#end
+#if($doc.getFieldValue('display_ss'))<div> #field('display_ss')</div>#end
 #if($doc.getFieldValue('last_modified'))<div>Last-modified: #field('last_modified')</div>#end
 <div class="result-body">#field('content')</div>
 <div class="mlt">

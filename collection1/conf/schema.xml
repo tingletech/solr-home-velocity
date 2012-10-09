@@ -256,6 +256,10 @@
 
    <!-- Create a string version of author for faceting -->
    <copyField source="author" dest="author_s"/>
+
+   <!-- test out facet on every field -->
+   <copyField source="*_txt" dest="*_ss"/>
+   <copyField source="*_txt" dest="text"/>
 	
    <!-- Above, multiple source fields are copied to the [text] field. 
 	  Another way to map multiple source fields to the same 
